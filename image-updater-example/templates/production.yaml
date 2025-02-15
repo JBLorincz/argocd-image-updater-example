@@ -10,6 +10,8 @@ spec:
     namespace: production
     server: {{ .Values.spec.destination.server }}
   project: default
+  syncPolicy:
+    automated: {}
   source:
     path: example-app
     repoURL: https://github.com/jblorincz/argocd-image-updater-example
