@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: develop
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: production
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: example-app
+    repoURL: https://github.com/jblorincz/argocd-image-updater-example
+    targetRevision: HEAD

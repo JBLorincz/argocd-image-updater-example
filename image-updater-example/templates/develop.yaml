@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: develop
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: nginx=nginx:stable-alpine
+    argocd-image-updater.argoproj.io/nginx.update-strategy: digest
+    argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/gitcredentials
+    argocd-image-updater.argoproj.io/git-branch: develop
+spec:
+  destination:
+    namespace: develop
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: example-app
+    repoURL: https://github.com/jblorincz/argocd-image-updater-example
+    targetRevision: HEAD
