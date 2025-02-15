@@ -17,7 +17,9 @@ spec:
   project: default
   syncPolicy:
     automated: {}
+    syncOptions:
+      - CreateNamespace=true
   source:
     path: example-app
     repoURL: https://github.com/jblorincz/argocd-image-updater-example
-    targetRevision: HEAD
+    targetRevision: develop
