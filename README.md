@@ -19,7 +19,7 @@ argocd app create apps \
     --dest-namespace argocd \
     --dest-server https://kubernetes.default.svc \
     --repo <PATH TO YOUR FORK HERE> \
-    --path apps  
+    --path image-updater-example  
 argocd app sync apps
 ```
 
