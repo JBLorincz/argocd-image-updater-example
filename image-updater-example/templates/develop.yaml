@@ -6,11 +6,17 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   annotations:
+    #How we tell image updater to consider nginx:stable-alpine as a pod to update
     argocd-image-updater.argoproj.io/image-list: nginx=nginx:stable-alpine
+    #We use the digest strategy to tell image updater that we want to update the mutable tag based on most recent digest tied to that tag
     argocd-image-updater.argoproj.io/nginx.update-strategy: digest
+    #We tell argocd image updater that to apply an update, modify the git repo itself using the credentials on the cluster at this location
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+    #We tell argocd image updater that we want it to make its changes to the develop branch
     argocd-image-updater.argoproj.io/git-branch: develop
+    #We tell argocd image updater the helm path to the image name value so it knows what to override for that
     argocd-image-updater.argoproj.io/nginx.helm.image-name: image.repository
+    #We tell argocd image updater the helm path to the image tag value so it knows what to override for that
     argocd-image-updater.argoproj.io/nginx.helm.image-tag: image.tag
 spec:
   destination:

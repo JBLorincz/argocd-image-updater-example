@@ -6,7 +6,7 @@
 ## Git steps
 4. Create a [access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) in github with the `repo` scope and permissions to access your forked repo. Remember the token!
 5. Fork this repository. ArgoCD will need a way to modify the repository itself to achieve the GitOps design. The access token will let it do that.
-6. Using the Argo CLI, Register your repository like so: `argocd repo add <PATH TO YOUR FORK HERE> --username accesstoken --password <accesstoken>` NOTE: use your access token as the password here (username can be any nonempty string). Path to your fork should look something like `https://github.com/argoproj/argocd-example-apps.git`
+6. Using the Argo CLI, Register your repository like so: `argocd repo add <PATH TO YOUR FORK HERE> --username accesstoken --password <accesstoken>` NOTE: use your access token as the password here (username can be any nonempty string). Path to your fork should look something like `https://github.com/jblorincz/argocd-image-updater-example`
 7. In Argo, create a git secret with your access token to let image updater make updates.
 ```
 kubectl -n argocd create secret generic git-creds \
@@ -24,3 +24,9 @@ argocd app sync apps
 ```
 
 9. Watch as two apps get deployed, a `develop` and a `production` app. both will spawn one pod using the `nginx:stable-alpine` tag. develop is hooked up to argo image updater, while production is not. Both pods will be using the same image at first, but wait (at least a few hours) and you will see that the develop app the image gets automatically updated as new updates are made to nginx.
+
+
+10. Check for `argo-image-updater` to make a commit to your Github repo, modifying the file at `example-app/.argocd-source-develop.yaml`. This is where ArgoCD Image Updater will write the image tag to use, overriding the setting in the `values.yaml` to ensure that the image with the most recent digest is being applied for the image tag.
+
+
+Read more about the ArgoCD Image Updater here: [https://argocd-image-updater.readthedocs.io/en/stable/](https://argocd-image-updater.readthedocs.io/en/stable/)

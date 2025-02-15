@@ -1,5 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+# The production environment is not going to be using the updater
+# So the app can be kept vanilla.
 metadata:
   name: production
   namespace: argocd
