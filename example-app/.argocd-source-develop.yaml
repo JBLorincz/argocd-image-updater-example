@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: nginx
+    forcestring: true
+  - name: image.tag
+    value: stable-alpine@sha256:0d81c8285a2b38649706462c167463fced008b52bbce69d200e1a6027129d0ac
+    forcestring: true
